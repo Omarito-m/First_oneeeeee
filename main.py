@@ -53,6 +53,11 @@ class EncryptButtonView(View):
 async def تشفير(ctx):
     await ctx.send("اضغط على الزر لتشفير رسالة", view=EncryptButtonView())
 
+
+@bot.command()
+async def شوب(ctx):
+    await ctx.send("تم فتح الشوب  الساعة 1 الظهر و سيتم غلقها 1 مساء \n @everyone")
+    
 @bot.event
 async def on_interaction(interaction):
     custom_id = interaction.data.get("custom_id")
