@@ -125,11 +125,9 @@ async def w(ctx, member: discord.Member):
     count = warnings_dict.get(user_id, 0)
     
     if count >= 3:
-        await ctx.send("هذا المستخدم وصل الحد الأقصى من التحذيرات.")
+        await ctx.send("f" تم إعطاء <@{user_id}> تحذير "")
         return
-    else:
-        await ctx.send (f" تم إعطاء <@{user_id}> تحذير ")
-        return
+    
         
 
     role = guild.get_role(WARNING_ROLES[count])
@@ -141,6 +139,8 @@ async def w(ctx, member: discord.Member):
         for role_id in WARNING_ROLES:
             role = guild.get_role(role_id)
             await member.remove_roles(role)
+            ]
+            count = warnings_dict.get(user_id, 0)
         seller_role = guild.get_role(SELLER_ROLE_ID)
         if seller_role:
             await member.remove_roles(seller_role)
