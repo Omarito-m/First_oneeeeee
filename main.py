@@ -129,6 +129,7 @@ async def w(ctx, member: discord.Member):
         return
     else:
         await ctx.send (f" تم إعطاء <@{user_id}> تحذير ")
+        return
         
 
     role = guild.get_role(WARNING_ROLES[count])
