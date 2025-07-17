@@ -123,10 +123,13 @@ async def w(ctx, member: discord.Member):
     guild = ctx.guild
     user_id = member.id
     count = warnings_dict.get(user_id, 0)
-    await ctx.send(" **تم اعطاءه تحذير** ")
+    
     if count >= 3:
         await ctx.send("هذا المستخدم وصل الحد الأقصى من التحذيرات.")
         return
+    else:
+        await ctx.send (f" تم إعطاء <@{user_id}> تحذير ")
+        
 
     role = guild.get_role(WARNING_ROLES[count])
     await member.add_roles(role)
