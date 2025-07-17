@@ -123,27 +123,36 @@ async def w(ctx, member: discord.Member):
     guild = ctx.guild
     user_id = member.id
     count = warnings_dict.get(user_id, 0)
-    
-    if count >= 3:
-        await ctx.send("f" تم إعطاء <@{user_id}> تحذير "")
-        return
-    
-        
 
-    role = guild.get_role(WARNING_ROLES[count])
-    await member.add_roles(role)
+    if count >= 3:
+        await ctx.send(f"{member.mention} تجاوز الحد الأقصى من التحذيرات!")
+        return
+
+    # إعطاء رتبة التحذير حسب الترتيب
+    warning_role_id = WARNING_ROLES[count]
+    warning_role = guild.get_role(warning_role_id)
+    if warning_role:
+        await member.add_roles(warning_role)
+
     warnings_dict[user_id] = count + 1
 
+    await ctx.send(f"تم إعطاء تحذير رقم {warnings_dict[user_id]} لـ {member.mention}")
+
+    # إذا وصل للحد الأقصى (3 تحذيرات)
     if warnings_dict[user_id] == 3:
-        await ctx.send(f"{member.mention} وصل للحد الأقصى من التحذيرات!")
+        await ctx.send(f"{member.mention} وصل للحد الأقصى من التحذيرات! سيتم إزالة الرتب.")
+        
+        # إزالة جميع رتب التحذير
         for role_id in WARNING_ROLES:
             role = guild.get_role(role_id)
-            await member.remove_roles(role)
-            ]
-            count = warnings_dict.get(user_id, 0)
+            if role in member.roles:
+                await member.remove_roles(role)
+
+        # إزالة رتبة البائع
         seller_role = guild.get_role(SELLER_ROLE_ID)
-        if seller_role:
+        if seller_role in member.roles:
             await member.remove_roles(seller_role)
+
 
 @bot.event
 async def on_ready():
